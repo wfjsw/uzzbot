@@ -40,10 +40,10 @@ local function run(msg, matches)
     if matches[2] == 'user' then
       msgb.to.type = 'user'
       msgb.from.id = matches[3]
-    else if matches[2] == 'chat' then
+    elseif matches[2] == 'chat' then
       msgb.to.type = 'chat'
       msgb.to.id = matches[3]
-    else
+    else 
       return nil
     end
     local name = string.sub(matches[4], 1, 50)
