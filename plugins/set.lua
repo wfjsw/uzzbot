@@ -24,23 +24,42 @@ local function save_value(msg, name, value)
   end
   if hash then
     redis:hset(hash, name, value)
-    return "Saved "..name.." => "..value
+    return "Saved "..name
   end
 end
 
 local function run(msg, matches)
-  local name = string.sub(matches[1], 1, 50)
-  local value = string.sub(matches[2], 1, 1000)
+  if matches[1] == 'set' then
+    local name = string.sub(matches[2], 1, 50)
+    local value = string.sub(matches[3], 1, 1000)
 
-  local text = save_value(msg, name, value)
-  return text
+    local text = save_value(msg, name, value)
+    return text
+  elseif matches[1] == 'setto' then
+    local msgb = msg
+    if matches[2] == 'user' then
+      msgb.to.type == 'user'
+      msgb.from.id == matches[3]
+    else if matches[2] == 'chat' then
+      msgb.to.type == 'chat'
+      msg.to.id == matches[3]
+    else
+      return nil
+    end
+    local name = string.sub(matches[4], 1, 50)
+    local value = string.sub(matches[5], 1, 1000)
+
+    local text = save_value(msgb, name, value)
+    return text
+  end
 end
 
 return {
   description = "Plugin for saving values. get.lua plugin is necessary to retrieve them.", 
   usage = "!set [value_name] [data]: Saves the data with the value_name name.",
   patterns = {
-   "!set ([^%s]+) (.+)$"
+   "!(set) ([^%s]+) (.+)$",
+   "!(setto) ([^%s]+) ([^%s]+) ([^%s]+) (.+)$"
   }, 
   run = run 
 }
