@@ -38,11 +38,11 @@ local function run(msg, matches)
   elseif matches[1] == 'setto' then
     local msgb = msg
     if matches[2] == 'user' then
-      msgb.to.type == 'user'
-      msgb.from.id == matches[3]
+      msgb.to.type = 'user'
+      msgb.from.id = matches[3]
     else if matches[2] == 'chat' then
-      msgb.to.type == 'chat'
-      msgb.to.id == matches[3]
+      msgb.to.type = 'chat'
+      msgb.to.id = matches[3]
     else
       return nil
     end
