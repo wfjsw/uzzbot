@@ -42,7 +42,7 @@ local function plugin_help(name,number)
     if not plugin then return nil end
   end
  
-    local text = ""
+    local text = "Plugin Usage: \n"
     if (type(plugin.usage) == "table") then
       for ku,usage in pairs(plugin.usage) do
         text = text..usage..'\n'
