@@ -10,15 +10,6 @@ local function is_chat_whitelisted(id)
   return white
 end
 
-local function kick_user(user_id, chat_id)
-  if is_mod2(user_id, chat_id) then
-    return nil
-  end
-  local chat = 'chat#id'..chat_id
-  local user = 'user#id'..user_id
-  chat_del_user(chat, user, ok_cb, true)
-end
-
 local function is_mod2(user_id, chat_id)
   local var = false
   local data = load_data(_config.moderation.data)
@@ -42,9 +33,18 @@ local function is_mod2(user_id, chat_id)
   return var
 end
 
+local function kick_user(user_id, chat_id)
+  if is_mod2(user_id, chat_id) then
+    return
+  end
+  local chat = 'chat#id'..chat_id
+  local user = 'user#id'..user_id
+  chat_del_user(chat, user, ok_cb, true)
+end
+
 local function ban_user(user_id, chat_id)
   if is_mod2(user_id, chat_id) then
-    return nil
+    return
   end
   
   -- Save to redis
