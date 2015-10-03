@@ -133,6 +133,10 @@ local function username_id(cb_extra, success, result)
 end
 
 local function run(msg, matches)
+  if matches[1] == 'kickme' then
+    kick_user(msg.from.id, msg.to.id)
+    return nil
+  end
   if not is_momod(msg) then
     if not is_sudo(msg) then
       return nil
@@ -264,6 +268,7 @@ return {
     "^!(ban) (delete) (.*)$",
     "^!(kick) (.*)$",
     "^!!tgservice (.+)$",
+    "^!(kickme)"
   }, 
   run = run,
   pre_process = pre_process
