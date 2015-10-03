@@ -11,12 +11,42 @@ local function is_chat_whitelisted(id)
 end
 
 local function kick_user(user_id, chat_id)
+  if is_mod2(user_id, chat_id) then
+    return nil
+  end
   local chat = 'chat#id'..chat_id
   local user = 'user#id'..user_id
   chat_del_user(chat, user, ok_cb, true)
 end
 
+local function is_mod2(user_id, chat_id)
+  local var = false
+  local data = load_data(_config.moderation.data)
+  if data[tostring(chat_id)] then
+    if data[tostring(chat_id)]['moderators'] then
+      if data[tostring(chat_id)]['moderators'][tostring(user_id)] then
+        var = true
+      end
+    end
+  end
+  if data['admins'] then
+    if data['admins'][tostring(user_id)] then
+      var = true
+    end
+  end
+  for v,user in pairs(_config.sudo_users) do
+    if user == user_id then
+        var = true
+    end
+  end
+  return var
+end
+
 local function ban_user(user_id, chat_id)
+  if is_mod2(user_id, chat_id) then
+    return nil
+  end
+  
   -- Save to redis
   local hash =  'banned:'..chat_id..':'..user_id
   redis:set(hash, true)
