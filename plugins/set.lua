@@ -3,6 +3,19 @@ local function save_value(msg, name, value)
     return "Usage: !set var_name value"
   end
   
+  if value == '*remove*' then
+      local hash = nil
+    if msg.to.type == 'chat' then
+      hash = 'chat:'..msg.to.id..':variables'
+    end
+    if msg.to.type == 'user' then
+      hash = 'user:'..msg.from.id..':variables'
+    end
+    if hash then
+      redis:hdel(hash, name)
+      return "Saved "..name.." => "..value
+    end
+  
   local hash = nil
   if msg.to.type == 'chat' then
     hash = 'chat:'..msg.to.id..':variables'

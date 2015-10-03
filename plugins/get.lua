@@ -12,7 +12,7 @@ local function list_variables(msg)
   
   if hash then
     local names = redis:hkeys(hash)
-    local text = ''
+    local text = 'Following texts are available: \n'
     for i=1, #names do
       text = text..names[i]..'\n'
     end
@@ -25,9 +25,9 @@ local function get_value(msg, var_name)
   if hash then
     local value = redis:hget(hash, var_name)
     if not value then
-      return'Not found, use "!get" to list variables'
+      return 'Not found, use "!get" to list variables'
     else
-      return var_name..' => '..value
+      return '⚠️Info about "'..var_name..'"⚠️\n\n'..value
     end
   end
 end
