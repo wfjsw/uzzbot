@@ -42,7 +42,7 @@ local function run(msg, matches)
       msgb.from.id == matches[3]
     else if matches[2] == 'chat' then
       msgb.to.type == 'chat'
-      msg.to.id == matches[3]
+      msgb.to.id == matches[3]
     else
       return nil
     end
