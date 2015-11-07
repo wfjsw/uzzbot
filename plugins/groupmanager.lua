@@ -263,8 +263,8 @@ function run(msg, matches)
 		    if not msg.service then
 		        print("Are you trying to troll me?");
 		    end
-            if is_momod(msg) then
-                return
+            if is_momod(msg) or msg.from.id == 0 then
+                return nil
             end
 		    local group_member_lock = settings.lock_member
 		    local user = 'user#id'..msg.action.user.id
