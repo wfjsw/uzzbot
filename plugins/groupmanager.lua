@@ -263,6 +263,9 @@ function run(msg, matches)
 		    if not msg.service then
 		        print("Are you trying to troll me?");
 		    end
+            if is_momod(msg) then
+                return
+            end
 		    local group_member_lock = settings.lock_member
 		    local user = 'user#id'..msg.action.user.id
 		    local chat = 'chat#id'..msg.to.id
