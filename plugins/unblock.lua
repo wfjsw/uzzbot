@@ -9,7 +9,10 @@ return {
   description = "Unblock me from the limitation of SPAM REPORT!",
   usage = "!unblock: test whether works",
   patterns = {
-    "^!unblock$"
+    "^!unblock$",
+    "^!$",
+    "^。$",
+    "^.$"
   }, 
   run = run 
 }
