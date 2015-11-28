@@ -2,7 +2,7 @@ do
 
 function run(msg, matches)
   local target = "chat#id"..tostring(tonumber(matches[1], 16))
-  join = chat_add_user(msg.from.id,target,ok_cb,false)
+  join = chat_add_user(target,msg.from.id,ok_cb,false)
 end
 
 
